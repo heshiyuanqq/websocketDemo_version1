@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.websocket.web.dao.TestSystemMapper">
+
+	<resultMap id="resultMap" type="com.websocket.web.bean.TestSystem">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="mac" property="mac"	jdbcType="VARCHAR" />
+		<result column="last_ip" property="lastIp" jdbcType="VARCHAR" />
+		<result column="last_lng" property="lastLng" jdbcType="NUMERIC" />
+		<result column="last_lat" property="lastLat" jdbcType="NUMERIC" />
+		<result column="type_id" property="typeId" jdbcType="BIGINT" />
+		<result column="system_id" property="systemId" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="BIGINT" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.websocket.web.bean.TestSystem">
+		INSERT INTO test_system(mac,
+								last_ip,
+								last_lat,
+								last_lng,
+								type_id,
+								system_id,
+								state) 
+					VALUES(#{mac},
+						   #{lastIp},
+						   #{lastLat},
+						   #{lastLng},
+						   #{typeId},
+						   #{systemId},
+						   #{state});
+	</insert>
+	
+	<update id="updateById" parameterType="com.websocket.web.bean.TestSystem">
+			UPDATE test_system
+			<set>
+			    <if test="mac != null and mac !=''"> mac=#{mac},</if>
+			    <if test="lastIp != null and lastIp !=''">last_ip=#{lastIp},</if>
+			    <if test="lastLat != null and lastLat !=''">last_lat=#{lastLat},</if>
+			    <if test="lastLng != null and lastLng !=''"> last_lng=#{lastLng},</if>
+			    <if test="typeId != null"> type_id=#{typeId},</if>
+			    <if test="systemId != null and systemId !=''">system_id=#{systemId},</if>
+			    <if test="state != null"> state=#{state}</if>
+			</set>
+			where id = #{id}
+	</update>
+	<update id="updateBySystemId" parameterType="com.websocket.web.bean.TestSystem">
+			UPDATE test_system
+			<set>
+			   <if test="mac != null and mac !=''"> mac=#{mac},</if>
+			    <if test="lastIp != null and lastIp !=''">last_ip=#{lastIp},</if>
+			    <if test="lastLat != null and lastLat !=''">last_lat=#{lastLat},</if>
+			    <if test="lastLng != null and lastLng !=''"> last_lng=#{lastLng},</if>
+			    <if test="typeId != null"> type_id=#{typeId},</if>
+			    <if test="systemId != null and systemId !=''">system_id=#{systemId},</if>
+			    <if test="state != null"> state=#{state}</if>
+			</set>
+			where system_id = #{systemId}
+	</update>
+	
+	<select id="getListByConditions"  resultMap="resultMap" parameterType="java.util.Map">
+          SELECT
+          	 	 * 
+          FROM 
+          		 test_system 
+          <where>
+		          <if test="mac!=null and mac !=''">
+		          		and mac=#{mac}
+		          </if>
+		          <if test="lastIp!=null and lastIp !=''">
+		          		and last_ip=#{lastIp}
+		          </if>
+		          <if test="lastLat!=null and lastLat !=''">
+		          		and last_lat=#{lastLat}
+		          </if>
+		          <if test="lastLng!=null and lastLng !=''">
+		          		and last_lng=#{lastLng}
+		          </if>
+		          <if test="typeId!=null">
+		          		and type_id=#{typeId}
+		          </if>
+		          <if test="systemId!=null and systemId !=''">
+		          		and system_id=#{systemId}
+		          </if>
+		          <if test="state!=null">
+		          		and state=#{state}
+		          </if>
+          </where>
+    </select>
+    
+	
+	<select id="getListByState" parameterType="java.lang.Integer" resultMap="resultMap">
+	   	 SELECT * FROM test_system WHERE state=#{state}
+	</select>
+	
+	<select id="getListByTypeId" parameterType="java.lang.Integer" resultMap="resultMap">
+	   	 SELECT * FROM test_system WHERE type_id=#{typeId}
+	</select>
+	
+	<select id="getStateCountMap"  resultType="java.util.Map">
+		SELECT  state,COUNT(id) AS stateCount FROM test_system  GROUP BY state  ORDER BY state ASC
+	</select>
+	
+	<select id="getTypeCountMap"  resultType="java.util.Map">
+		SELECT  type_id AS typeId,COUNT(id) AS typeCount FROM test_system  GROUP BY type_id  ORDER BY type_id ASC
+	</select>
+	
+    
+<!-- 	
+  `mac` VARCHAR(100) DEFAULT NULL COMMENT '该测试系统所在机器mac地址',
+  `lastIp` VARCHAR(50) DEFAULT NULL COMMENT '该测试系统所在机器上次登录ip',
+  `lastLng` DOUBLE(28,14) DEFAULT NULL COMMENT '......所在位置经度',
+  `lastLat` DOUBLE(28,14) DEFAULT NULL COMMENT '...维度',
+  `typeId` INT(5) DEFAULT NULL COMMENT '该测试系统类型id
+  `state` TINYINT(2) DEFAULT NULL COMMENT '系统状态(如系统空、闲准备就绪等)',
+	 -->
+	   <select id="getListBySystemIds" resultMap="resultMap" parameterType="java.util.List">
+	        SELECT
+	        	 *
+	        FROM
+	        	 test_system
+	        WHERE 
+	        	system_id IN
+	        <foreach collection="list" item="systemId" index="index"
+	            open="(" close=")" separator=",">
+	            #{systemId}
+	        </foreach>
+	    </select>
+<!-- 
+	<update id="updateBySessionId" parameterType="com.cmri.bpt.service.ue.bo.AppStatus">
+		update co_appstatus
+		<set>
+			mode = #{mode},
+			cell = #{cell},
+			rxlevel=#{rxlevel},
+			task = #{task},
+			progress
+			= #{progress},
+			status =
+			#{status},
+			cmd=#{cmd},
+			cmdState=#{cmdState}
+		</set>
+		where app_session_id = #{appSessionId}
+	</update>
+
+	<delete id="delete" parameterType="com.cmri.bpt.service.ue.bo.AppStatus">
+		delete from
+		co_appstatus
+		where
+		id = #{id}
+	</delete>
+
+	<delete id="deleteBySessionId" parameterType="Integer">
+		delete from
+		co_appstatus
+		where
+		app_session_id = #{appSessionId}
+	</delete>
+
+	<select id="exists" parameterType="Integer" resultType="Boolean">
+		select
+		count(*) from
+		co_appstatus where app_session_id = #{appSessionId}
+	</select>
+	
+	<select id="count" parameterType="Integer" resultType="Integer">
+		select
+		count(*) from
+		co_appstatus where app_session_id = #{appSessionId}
+	</select>
+
+	<select id="query" resultMap="ResultMap">
+		select
+		status.*,session.sys_id,session.tag,session.phoneType,session.online from
+		co_appstatus status left join
+		co_apptokensession session on
+		status.app_session_id = session.id
+		where
+		session.user_id = #{id}
+	</select>
+
+	<select id="queryAll" resultMap="ResultMap">
+		select
+		status.*,session.sys_id,session.tag,session.phoneType,session.online from
+		co_appstatus status left join
+		co_apptokensession session on
+		status.app_session_id = session.id
+	</select>
+ -->
+
+</mapper>

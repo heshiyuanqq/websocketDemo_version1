@@ -1,0 +1,18 @@
+.outerbox{
+		width: 200px;height: 150px;float: left;position: relative;
+}
+
+
+.innerbox{
+		width: 170px;height: 110px;text-align: center;line-height: 110px;position: absolute;margin-left: 26px;margin-top: 0px;font-size: 30px;
+}
+
+
+.bottomTitleBox{
+		width: 170px;height: 40px;text-align: center;line-height: 40px;position: absolute;margin-left: 26px;margin-top: 110px;
+}
+
+.checkbox{
+	
+	cursor: pointer;
+}

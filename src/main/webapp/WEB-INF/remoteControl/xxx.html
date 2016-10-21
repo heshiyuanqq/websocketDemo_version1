@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery-1.8.0.js"></script>
+</head>
+<body>
+	<div id="div1" style="width: 100px;height: 100px;background-color: red;">
+	
+	</div>
+	<div id="div2" style="width: 100px;height: 100px;background-color: green">
+	
+	</div>
+	<div id="div3" style="width: 100px;height: 100px;background-color: yellow">
+	
+	</div>
+	<div id="div4" style="width: 100px;height: 100px;background-color: blue">
+	
+	</div>
+</body>
+<script type="text/javascript">
+		//同时运动
+		/* $("#div1").animate({'margin-left':'500px'},3000,function(){
+			
+		});
+		
+		$("#div2").animate({'margin-left':'500px'},3000,function(){
+			
+		});
+		
+		$("#div3").animate({'margin-left':'500px'},3000,function(){
+			
+		});
+		$("#div4").animate({'margin-left':'500px'},3000,function(){
+			
+		}); */
+		
+		//顺序运动(层层嵌套)
+	/* 	$("#div1").animate({'margin-left':'500px'},3000,function(){
+				$("#div2").animate({'margin-left':'500px'},3000,function(){
+						$("#div3").animate({'margin-left':'500px'},3000,function(){
+								$("#div4").animate({'margin-left':'500px'},3000,function(){
+									
+								}); 
+						});
+				});
+		}); */
+		
+		/* 
+		for(var i=1;i<5;i++){
+				$("#div"+i).animate({'margin-left':'500px'},1500);
+		}
+		 */
+		
+	/* 	
+		function move(i,max){
+				if(i<max){
+					$("#div"+i).animate({'margin-left':'500px'},1500,function(){
+						i++;
+						move(i,max);
+					});
+				}
+		}
+		move(1,5); */
+		
+		//1.反转二叉树
+		//2.用递归回调模拟setInteraal效果
+		/*    47
+			/    \
+		  34     60
+		 /  \    /  \
+		20  37  50   80
+		*/
+		function BinaryTree(){
+				alert(this.value);
+			
+				
+				this.add=function(value){
+					if(this.value==undefined){
+						this.value=value;
+						return;
+					}
+					
+					if(this.value<value){//追加到右子树
+							if(this.rightTree==undefined){
+									this.rightTree=new BinaryTree();
+									this
+							}						
+					}else{//追加到左子树
+						
+					}
+				}
+				
+				
+				this.print=function(){
+					
+					
+				}
+		}
+		
+		
+		//var tree=new BinaryTree();
+		
+		
+		
+		function Person(){
+			this.name="zhangsan";
+			
+			
+			alert(this.name);
+			
+			alert(new Person().name);
+				
+		}
+		
+		
+		
+		new Person();
+		
+		
+		
+		
+		/* tree.add(47);
+		tree.add(34);
+		tree.add(60);
+		tree.add(20);
+		tree.add(37);
+		tree.add(50);
+		tree.add(80);
+		
+		
+		tree.print(); */
+		
+		
+		
+		
+		
+		
+		
+		
+</script>
+</html>
